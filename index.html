@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <title>Welcome to Twiddler!</title>
+
     <!-- access jquery library and dataGenerator -->
     <script src="jquery.js"></script>
     <script src="dataGenerator.js"></script>
+
   </head>
   <body>
+
+    <header>
+      <h1>Twiddler</h1>
+    </header>
+
     <script>
 
       $(document).ready(function() {
@@ -23,13 +32,16 @@
           // create a div for a single tweet
           var $tweet = $('<div></div>');
           // add text to the empty div with username and message
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Posted on ' + tweet.created_at);
           // attach the tweet div to the html body
           $tweet.appendTo($body);
           // decrement the index value by 1 to move towards the beginning of the array
-          index -= 1;
+          index --;
         }
 
+        // display tweets for a specific user
+        // $body.html('');
+        // var userIndex = streams.users.shawndrost.length - 1;
       });
 
     </script>
