@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- access jquery library and dataGenerator -->
     <script src="jquery.js"></script>
     <script src="dataGenerator.js"></script>
   </head>
   <body>
     <script>
 
-      $(document).ready(function(){
+      $(document).ready(function() {
+        // select the body tag
         var $body = $('body');
+        // replace whatever is currently in the body tag of the html to an empty string (clear the html in the browser)
         $body.html('');
 
+        // grab the final element's number in the streams.home array
         var index = streams.home.length - 1;
-        while(index >= 0){
+        // while the array still contains an element/tweet
+        while (index >= 0) {
+          // locate the tweet at the index in streams.home
           var tweet = streams.home[index];
+          // create a div for a single tweet
           var $tweet = $('<div></div>');
+          // add text to the empty div with username and message
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          // attach the tweet div to the html body
           $tweet.appendTo($body);
+          // decrement the index value by 1 to move towards the beginning of the array
           index -= 1;
         }
 

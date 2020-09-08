@@ -5,22 +5,28 @@
 
 // set up data structures
 window.streams = {};
+// array of all tweets from all users
 streams.home = [];
+// object with properties for each user
 streams.users = {};
 streams.users.shawndrost = [];
 streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
+// array of strings of all usernames
 window.users = Object.keys(streams.users);
 
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
+  // get the username from the new tweet
   var username = newTweet.user;
+  // at the current username, add the new tweet to the array
   streams.users[username].push(newTweet);
+  // from array that contains all tweets, add the new tweet to the array
   streams.home.push(newTweet);
 };
 
-// utility function
+// utility function to select random words from a tweet generator
 var randomElement = function(array){
   var randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -33,6 +39,7 @@ var objects = ['my', 'your', 'the', 'a', 'my', 'an entire', 'this', 'that', 'the
 var nouns = ['cat', 'koolaid', 'system', 'city', 'worm', 'cloud', 'potato', 'money', 'way of life', 'belief system', 'security system', 'bad decision', 'future', 'life', 'pony', 'mind'];
 var tags = ['#techlife', '#burningman', '#sf', 'but only i know how', 'for real', '#sxsw', '#ballin', '#omg', '#yolo', '#magic', '', '', '', ''];
 
+// create a random tweet message
 var randomMessage = function(){
   return [randomElement(opening), randomElement(verbs), randomElement(objects), randomElement(nouns), randomElement(tags)].join(' ');
 };
@@ -46,12 +53,16 @@ var generateRandomTweet = function(){
   addTweet(tweet);
 };
 
+// invokes function to generate random tweets 10 times
 for(var i = 0; i < 10; i++){
   generateRandomTweet();
 }
 
+// kicks off a periodic process that adds more data in streams
 var scheduleNextTweet = function(){
+  // invoke function to create object containing tweet properties
   generateRandomTweet();
+  // schedule the function to be invoked later (0 - 1.5s)
   setTimeout(scheduleNextTweet, Math.random() * 1500);
 };
 scheduleNextTweet();
