@@ -10,11 +10,6 @@
 
   </head>
   <body>
-
-    <header>
-      <h1>Twiddler</h1>
-    </header>
-
     <script>
 
       $(document).ready(function() {
@@ -22,6 +17,11 @@
         var $body = $('body');
         // replace whatever is currently in the body tag of the html to an empty string (clear the html in the browser)
         $body.html('');
+
+        // header
+        var $header = $('<h1></h1>');
+        $header.text('Twiddler');
+        $header.appendTo($body);
 
         // load new tweets button
         var $button = $('<button class="loadTweetsButton"> </button>');
