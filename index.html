@@ -30,18 +30,18 @@
           // locate the tweet at the index in streams.home
           var tweet = streams.home[index];
           // create a div for a single tweet
-          var $tweet = $('<div></div>');
-          // add text to the empty div with username and message
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Posted on ' + tweet.created_at);
+          var $tweet = $('<div class="userTweet"></div>');
+          // apply a link for each username using custom data attribute
+          var $username = $(`<a class="user" href="#" data-username="${tweet.user}"></a>`);
+          $username.text(`@${tweet.user}`);
+          // insert tweet to the empty div with username, message and timestamp
+          $tweet.append($username, ': ' + tweet.message + '<br><b> Posted on </b>' + tweet.created_at + '<br><br>');
           // attach the tweet div to the html body
           $tweet.appendTo($body);
           // decrement the index value by 1 to move towards the beginning of the array
           index --;
         }
 
-        // display tweets for a specific user
-        // $body.html('');
-        // var userIndex = streams.users.shawndrost.length - 1;
       });
 
     </script>
