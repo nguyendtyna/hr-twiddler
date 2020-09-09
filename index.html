@@ -8,6 +8,9 @@
     <script src="jquery.js"></script>
     <script src="dataGenerator.js"></script>
 
+    <!-- access css file -->
+    <link href="style.css" type="text/css" rel="stylesheet">
+
   </head>
   <body>
     <script>
@@ -19,8 +22,7 @@
         $body.html('');
 
         // header
-        var $header = $('<h1></h1>');
-        $header.text('Twiddler');
+        var $header = $('<h1>Twiddler</h1>');
         $header.appendTo($body);
 
         // load new tweets button
@@ -53,9 +55,9 @@
             // locate the tweet at the index of userStream
             var tweet = userStream[index];
             // create a div for a single tweet
-            var $tweet = $('<div class="userTweet"></div>');
+            var $tweet = $('<div class="userTweet"></div><br>');
             // apply a link for each username using custom data attribute
-            var $username = $(`<a class="user" href="#" data-username="${tweet.user}"></a>`);
+            var $username = $(`<br><a class="user" href="#" data-username="${tweet.user}"></a>`);
             $username.text(`@${tweet.user}`);
             // insert tweet to the empty div with username, message and timestamp
             $tweet.append($username, ': ' + tweet.message + '<br><b> Posted </b>' + tweet.created_at + '<br><br>');
@@ -65,6 +67,9 @@
             index--;
           }
         };
+
+        // immediatly display tweets on the page
+        loadTweets();
 
         /* EVENT HANDLERS */
 
