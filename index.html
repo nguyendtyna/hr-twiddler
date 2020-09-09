@@ -15,7 +15,7 @@
       $(document).ready(function() {
         // select the body tag
         var $body = $('body');
-        // replace whatever is currently in the body tag of the html to an empty string (clear the html in the browser)
+        // clear the existing html in the browser
         $body.html('');
 
         // header
@@ -24,30 +24,63 @@
         $header.appendTo($body);
 
         // load new tweets button
-        var $button = $('<button class="loadTweetsButton"> </button>');
-        $button.text('Load new Tweets');
-        $button.appendTo($body);
+        var $button = $('<br><button class="loadTweetsButton"> </button>');
+        $button.text('Load Tweets');
+        $button.appendTo($header);
 
-        // on click event, load new tweets to feed
-        $(".loadTweetsButton").on("click", function() {
-          // grab the final element's number in the streams.home array
-          var index = streams.home.length - 1;
+        // timeline containing all tweets
+        var $timeline = $('<div></div>');
+        $timeline.appendTo($body);
+
+        /* LOAD TWEETS ONTO THE TIMELINE */
+
+        var loadTweets = function(username) {
+          // set default stream to streams.home containing all tweets
+          var userStream = streams.home;
+
+          // to get a user's timeline, check if user exists
+          if (username) {
+            // set stream to specific user's collection of tweets
+            userStream = streams.users[username];
+          }
+
+          // clear the timeline
+          $timeline.html('');
+          // grab the final element's number in the userStream array
+          var index = userStream.length - 1;
           // while the array still contains an element/tweet
           while (index >= 0) {
-            // locate the tweet at the index in streams.home
-            var tweet = streams.home[index];
+            // locate the tweet at the index of userStream
+            var tweet = userStream[index];
             // create a div for a single tweet
             var $tweet = $('<div class="userTweet"></div>');
             // apply a link for each username using custom data attribute
             var $username = $(`<a class="user" href="#" data-username="${tweet.user}"></a>`);
             $username.text(`@${tweet.user}`);
             // insert tweet to the empty div with username, message and timestamp
-            $tweet.append($username, ': ' + tweet.message + '<br><b> Posted on </b>' + tweet.created_at + '<br><br>');
-            // attach the tweet div to the html body
-            $tweet.appendTo($body);
+            $tweet.append($username, ': ' + tweet.message + '<br><b> Posted </b>' + tweet.created_at + '<br><br>');
+            // attach the tweet div to the timeline
+            $tweet.appendTo($timeline);
             // decrement the index value by 1 to move towards the beginning of the array
             index--;
           }
+        };
+
+        /* EVENT HANDLERS */
+
+        // on click event, load new tweets to timeline
+        $button.on('click', function(event) {
+          // invoke function to load tweets
+          loadTweets();
+        });
+
+        // on click event, show an individual user's tweets
+        $body.on('click', 'a', function(event) {
+          // console.log(event.target);
+          // get the username on click event
+          var username = event.target.innerText.slice(1);
+          // load specific user's tweets
+          loadTweets(username);
         });
 
       });
